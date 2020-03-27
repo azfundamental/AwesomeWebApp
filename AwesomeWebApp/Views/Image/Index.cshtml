@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+    <br />
+    <br />
+
+
+@if (Model != null && Model.Count > 0)
+{
+    foreach (var item in Model)
+    {
+        <div class="imageBlock">
+            <a href="@item" target="_blank"><img class="thumb" src="@item" alt="images" /></a><br />
+            <div class="deleteDiv"><img class="deleteIcon" src="~/Content/images/deleteImage.png" title="Delete Image" onclick="deleteImage('@item');" /></div>
+        </div>
+    }
+    using (Html.BeginForm("DeleteAll", "Image", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="fileUpload btn btn-default"><span>Delete All Files</span><input type="submit" name="deleteAll" class="upload" /></div>
+    }
+
+}
+
+
+<br />
+<h1>Image Blob test </h1>
+<br />
+<div class="container">
+    <p>Use the following links to open the differnet 'staging' sites </p>
+    <p><a href="./Image/Upload">Upload and View</a></p>
+    <p><a href="./Image/View">View Images </a></p>
+</div>
+
+
+
+
+
+
+<script>
+    //Calls async Task<ActionResult> DeleteImage(string name) in the HomeController and Refreshes the page
+    function deleteImage(item) {
+        var url = "/Image/DeleteImage";
+        $.post(url, { Name: item }, function (data) {
+            window.location.href = "/Image/Index";
+        });
+    }
+</script>
