@@ -16,15 +16,15 @@ namespace AwesomeWebApp.Models
         public async Task<string> UploadImageAsync(HttpPostedFileBase imageToUpload)
         {
             string imageFullPath = null;
+            CloudStorageAccount cloudStorageAccount = ConnectionString.GetConnectionString();
+            CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+            CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference("sampleimage");
             if (imageToUpload == null || imageToUpload.ContentLength == 0)
             {
                 return null;
             }
             try
             {
-                CloudStorageAccount cloudStorageAccount = ConnectionString.GetConnectionString();
-                CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
-                CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference("sampleimage");
 
                 if (await cloudBlobContainer.CreateIfNotExistsAsync())
                 {

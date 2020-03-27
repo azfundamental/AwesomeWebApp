@@ -18,18 +18,18 @@ namespace AwesomeWebApp.Controllers
         ImageService imageService = new ImageService();
 
 
-        static CloudBlobClient blobClient;
-        const string blobContainerName = "webappstoragedotnet-imagecontainer";
-        static CloudBlobContainer CloudBlobContainer;
 
+        const string blobContainerName = "webappstoragedotnet-imagecontainer";
+
+        readonly CloudStorageAccount CloudStorageAccount = ConnectionString.GetConnectionString();
 
         public async Task<ActionResult> Index()
         {
             try
             {
                 // Create a blob client for interacting with the blob service.
-                CloudStorageAccount cloudStorageAccount = ConnectionString.GetConnectionString();
-                CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+                CloudBlobClient cloudBlobClient = CloudStorageAccount.CreateCloudBlobClient();
                 CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference("sampleimage");
 
                 // To view the uploaded blob in a browser, you have two options. The first option is to use a Shared Access Signature (SAS) token to delegate  
@@ -95,8 +95,7 @@ namespace AwesomeWebApp.Controllers
         {
             try
             {
-                CloudStorageAccount cloudStorageAccount = ConnectionString.GetConnectionString();
-                CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+                 CloudBlobClient cloudBlobClient = CloudStorageAccount.CreateCloudBlobClient();
                 CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference("sampleimage");
                 Uri uri = new Uri(name);
                 string filename = Path.GetFileName(uri.LocalPath);
@@ -124,8 +123,8 @@ namespace AwesomeWebApp.Controllers
         {
             try
             {
-                CloudStorageAccount cloudStorageAccount = ConnectionString.GetConnectionString();
-                CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+                CloudBlobClient cloudBlobClient = CloudStorageAccount.CreateCloudBlobClient();
                 CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference("sampleimage");
                 foreach (var blob in cloudBlobContainer.ListBlobs())
                 {
