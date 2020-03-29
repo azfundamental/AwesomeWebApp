@@ -17,10 +17,6 @@ namespace AwesomeWebApp.Controllers
     {
         ImageService imageService = new ImageService();
 
-
-
-        const string blobContainerName = "webappstoragedotnet-imagecontainer";
-
         readonly CloudStorageAccount CloudStorageAccount = ConnectionString.GetConnectionString();
 
         public async Task<ActionResult> Index()

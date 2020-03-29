@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<br />
+<br />
+<h1>Image Blob</h1>
+<br />
+
+@if (ViewBag.allBlobsimage != null && ViewBag.allBlobsimage.Count > 0)
+{
+    foreach (var item in ViewBag.allBlobsimage)
+    {
+        <div class="imageBlock">
+            <a href="@item" target="_blank"><img class="thumb" src="@item" alt="images" /></a><br />
+            <div class="deleteDiv"><img class="ResizeIcon" src="~/Content/images/resize.png" title="Resize Image" onclick="resizeImage('@item');" /></div>
+        </div>
+    }
+
+}
+
+
+<br />
+<h1>Image Blob Miniature </h1>
+<br />
+
+@if (ViewBag.allBlobsimage2 != null && ViewBag.allBlobsimage2.Count > 0)
+{
+    foreach (var item2 in ViewBag.allBlobsimage2)
+    {
+        <div class="imageBlock">
+            <a href="@item2" target="_blank"><img class="thumb" src="@item2" alt="images" /></a><br />
+            <div class="deleteDiv"><img class="ResizeIcon" src="~/Content/images/resize.png" title="Resize Image" onclick="resizeImage('@item2');" /></div>
+        </div>
+    }
+
+}
+
+
+
+
+
+
+<script>
+    //Calls async Task<ActionResult> DeleteImage(string name) in the HomeController and Refreshes the page
+    function resizeImage(item) {
+        var url = "https://myawesomefunctionapp.azurewebsites.net/api/ResizeImageHttp?code=MD4JpCvhcmawiL3RwCaS8RzcHd0YGnnVdwpJlva6iPDNkjTC9nbzlQ==";
+        $.post(url, { Name: item }, function (data) {
+            window.location.href = "/Function/Index";
+        });
+    }
+</script>
